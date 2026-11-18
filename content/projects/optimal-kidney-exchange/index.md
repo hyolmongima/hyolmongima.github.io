@@ -37,4 +37,3 @@ Inflow equals outflow at every pair, so the solution is a set of disjoint cycles
 
 On 1,000 synthetic pairs, the base model finds 640 transplants and altruistic donors raise it to 661, all exact blood-type matches. Transport cost and capacity keep all 661 at 222,291 km of total travel. On a smaller instance, accounting for transport cost cut travel by 84% with the same matches.
 
-{{< svg src="cube.svg" class="narrow" caption="A three-pair cycle has three decision variables. Give-if-and-only-if-receive collapses the unit cube to its diagonal: the cycle happens entirely or not at all. The constraints form a flow problem whose corners are all whole numbers, so the LP relaxation already gives the integer answer. Gurobi solved the 1,000-pair model at the root node (640 = 640)." >}}
