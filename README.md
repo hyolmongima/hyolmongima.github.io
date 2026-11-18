@@ -73,13 +73,25 @@ Reference page with every element and its Markdown: `content/projects/_example/i
 
 A literal dollar sign is `\$`.
 
-## Build
+## Publish
+
+Live at https://hyolmongima.github.io, from the repo `hyolmongima/hyolmongima.github.io`.
 
 ```bash
-make build        # writes public/, drafts excluded
+make publish m="what changed"   # checks, commits everything, pushes
 ```
+
+`m` is the commit message. The command stops before committing if the build has a warning or this repo's git email isn't the personal noreply address. After the push, GitHub rebuilds the site (`.github/workflows/hugo.yml`) and it is live about a minute later. Progress and failures are under the repo's Actions tab.
+
+- **Drafts:** `draft: true` pages are built nowhere but `make dev`, yet their source still goes into the public repo. To keep one out of the repo, add its folder to `.gitignore`.
+- **Search engines:** `unlisted = true` in `hugo.toml` asks them not to list the site. Anyone with the link can still view it.
+- **Account:** this repo pushes with `~/.ssh/id_ed25519_personal` through the `github-personal` host in `~/.ssh/config`, and its name and email are set in `.git/config`. None of it touches the global git config. `ssh -T git@github-personal` should answer `Hi hyolmongima!`.
+
+`make build` writes the production site to `public/` without publishing, if you want to inspect it.
 
 ## Troubleshooting
 
 - `hugo: command not found`: `export PATH="$HOME/.local/bin:$PATH"`
 - Page not found in preview: stop and rerun `make dev`.
+- Live site looks old: wait for the Actions run to finish, then hard-refresh (Ctrl+Shift+R).
+- Actions run failed: open it on GitHub, fix the error, `make publish` again. Rerunning it from the Actions tab also works.

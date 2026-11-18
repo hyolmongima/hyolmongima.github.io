@@ -34,7 +34,7 @@
   </header>
   {{- $toc := gt .WordCount 600 }}
   {{- if isset .Params "toc" }}{{ $toc = .Params.toc }}{{ end }}
-  {{- if and $toc (strings.Contains .TableOfContents "<li>") }}
+  {{- if and $toc (strings.Contains .TableOfContents "<a ") }}
   <details class="toc">
     <summary>Contents</summary>
     {{ .TableOfContents }}
