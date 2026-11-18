@@ -1,0 +1,24 @@
+{{- /* {{< video src="run.mp4" poster="run.jpg" caption="..." loop=true >}} */ -}}
+{{- $src := .Get "src" | default (.Get 0) -}}
+{{- $url := $src -}}
+{{- $type := "" -}}
+{{- with .Page.Resources.Get $src -}}
+  {{- $url = .RelPermalink -}}
+  {{- $type = .MediaType.Type -}}
+{{- else -}}
+  {{- if not (strings.Contains $src "://") }}{{ warnf "Video %q not found next to %s" $src .Page.File.Path }}{{ end -}}
+  {{- $type = cond (strings.HasSuffix $src ".webm") "video/webm" "video/mp4" -}}
+{{- end -}}
+{{- $poster := "" -}}
+{{- with .Get "poster" -}}
+  {{- with $.Page.Resources.Get . }}{{ $poster = (.Resize "1280x webp").RelPermalink }}{{ else }}{{ $poster = . }}{{ end -}}
+{{- end -}}
+{{- $loop := .Get "loop" | default false -}}
+<figure class="video{{ with .Get "class" }} {{ . }}{{ end }}">
+  <video {{ if $loop }}autoplay loop{{ else }}controls preload="metadata"{{ end }} muted playsinline{{ with $poster }} poster="{{ . }}"{{ end }}>
+    <source src="{{ $url }}" type="{{ $type }}">
+  </video>
+  {{- with .Get "caption" }}
+  <figcaption>{{ . | markdownify }}</figcaption>
+  {{- end }}
+</figure>

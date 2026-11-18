@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="{{ site.Language.Locale }}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }} · {{ site.Title }}{{ end }}</title>
+{{ partial "head-meta.html" . }}
+<link rel="icon" href="data:,">
+<script>try{var t=localStorage.getItem("theme");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+{{- $css := resources.Get "css/main.css" | minify | fingerprint }}
+<link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
+{{- /* Rendering content first lets the math hook flag this page. */}}
+{{- $noop := .WordCount }}
+{{- if .Store.Get "hasMath" }}
+<link rel="stylesheet" href="{{ "katex/katex.min.css" | relURL }}">
+{{- end }}
+</head>
+<body>
+<header class="site">
+  {{- if not .IsHome }}
+  <a class="name" href="{{ "" | relURL }}">{{ site.Title }}</a>
+  {{- end }}
+  <nav>
+    {{- range site.Menus.main }}
+    <a href="{{ .URL }}"{{ if and .Page (not $.IsHome) (eq $.Section .Page.Section) }} aria-current="page"{{ end }}>{{ .Name }}</a>
+    {{- end }}
+    {{- if fileExists "static/cv.pdf" }}
+    <a href="{{ "cv.pdf" | relURL }}">CV</a>
+    {{- end }}
+    <button class="theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">
+      <svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true"><circle cx="8" cy="8" r="6.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 1.5a6.5 6.5 0 0 1 0 13z" fill="currentColor"/></svg>
+    </button>
+  </nav>
+</header>
+<main>
+{{ block "main" . }}{{ end }}
+</main>
+{{- if .IsHome }}{{ with site.Params.email }}
+<footer class="site"><a href="mailto:{{ . }}">{{ . }}</a></footer>
+{{- end }}{{ end }}
+<script>
+document.querySelector(".theme-toggle").addEventListener("click", function () {
+  var root = document.documentElement;
+  var cur = root.dataset.theme || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+  var next = cur === "dark" ? "light" : "dark";
+  root.dataset.theme = next;
+  try { localStorage.setItem("theme", next); } catch (e) {}
+  dispatchEvent(new Event("themechange"));
+});
+</script>
+{{- if .Store.Get "hasSurface" }}
+<script>
+(function () {
+  const plots = [...document.querySelectorAll(".surface .plot")];
+  const lib = document.createElement("script");
+  lib.src = {{ site.Params.plotly }};
+  // Plots inside a closed toggle have no size yet, so draw them when it opens.
+  const show = () => plots.forEach((el) => el.offsetParent && draw(el));
+  lib.onload = () => {
+    show();
+    addEventListener("themechange", show);
+    document.addEventListener("toggle", show, true);
+  };
+  document.head.appendChild(lib);
+
+  async function draw(el) {
+    const d = el._data || (el._data = await (await fetch(el.dataset.src)).json());
+    const css = getComputedStyle(document.documentElement);
+    const v = (name) => css.getPropertyValue(name).trim();
+    const axis = (k) => {
+      const a = {
+        title: { text: d.labels[k] },
+        color: v("--muted"), gridcolor: v("--rule"), zerolinecolor: v("--rule"), showbackground: false,
+      };
+      if ((d.log || []).includes(k)) {
+        const lo = Math.log10(Math.min(...d[k])), hi = Math.log10(Math.max(...d[k]));
+        const powers = [];
+        for (let p = Math.ceil(lo - 1e-9); p <= hi + 1e-9; p++) powers.push(p);
+        Object.assign(a, {
+          type: "log", range: [lo, hi],
+          tickvals: powers.map((p) => 10 ** p), ticktext: powers.map((p) => "10<sup>" + p + "</sup>"),
+        });
+      }
+      if (k === "z") a.range = [0, Math.max(...d.z.flat()) * 1.1];
+      return a;
+    };
+    const traces = [{
+      type: "surface", x: d.x, y: d.y, z: d.z, showscale: false,
+      colorscale: [[0, v("--bg-alt")], [1, v("--accent")]],
+      contours: { z: { show: true, color: v("--muted"), width: 1 } },
+      hovertemplate: d.labels.x + ": %{x:.0f}<br>" + d.labels.y + ": %{y:.0f}<br>" + d.labels.z + ": %{z:.3f}<extra></extra>",
+    }];
+    if (d.line) traces.push({
+      type: "scatter3d", mode: "lines", name: d.line.text,
+      x: d.line.x, y: d.line.y, z: d.line.z,
+      line: { color: v("--fg"), width: 4, dash: "dash" },
+      hovertemplate: d.line.text + ": %{z:.3f}<extra></extra>",
+    });
+    if (d.marker) traces.push({
+      type: "scatter3d", mode: "markers+text", hoverinfo: "skip",
+      x: [d.marker.x], y: [d.marker.y], z: [d.marker.z], text: [d.marker.text], textposition: "top center",
+      marker: { size: 5, color: "#e8b04a", line: { color: "#b9822a", width: 1 } },
+    });
+    Plotly.react(el, traces, {
+      paper_bgcolor: "rgba(0,0,0,0)", margin: { l: 0, r: 0, t: 0, b: 0 }, showlegend: false,
+      font: { family: v("--sans"), color: v("--fg"), size: 12 },
+      scene: {
+        xaxis: axis("x"), yaxis: axis("y"), zaxis: axis("z"), aspectmode: "cube",
+        camera: { eye: { x: 1.05, y: -1.7, z: 0.9 } },
+      },
+    }, { displaylogo: false, responsive: true, modeBarButtonsToRemove: ["toImage"] });
+  }
+})();
+</script>
+{{- end }}
+{{- if .Store.Get "hasMermaid" }}
+<script type="module">
+import mermaid from {{ site.Params.mermaid }};
+const root = document.documentElement;
+const nodes = [...document.querySelectorAll("pre.mermaid")];
+nodes.forEach((n) => (n.dataset.src = n.textContent));
+async function render() {
+  const css = getComputedStyle(root);
+  const v = (name) => css.getPropertyValue(name).trim();
+  mermaid.initialize({
+    startOnLoad: false,
+    theme: "base",
+    fontFamily: v("--sans"),
+    themeVariables: {
+      darkMode: css.colorScheme === "dark",
+      background: v("--bg"),
+      primaryColor: v("--bg-alt"),
+      primaryTextColor: v("--fg"),
+      primaryBorderColor: v("--muted"),
+      secondaryColor: v("--bg-alt"),
+      tertiaryColor: v("--bg"),
+      lineColor: v("--muted"),
+      textColor: v("--fg"),
+      fontSize: "14px",
+    },
+  });
+  nodes.forEach((n) => {
+    n.removeAttribute("data-processed");
+    n.textContent = n.dataset.src;
+  });
+  await mermaid.run({ nodes });
+}
+await render();
+addEventListener("themechange", render);
+</script>
+{{- end }}
+</body>
+</html>

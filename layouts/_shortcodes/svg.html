@@ -1,0 +1,12 @@
+{{- /* {{< svg src="diagram.svg" caption="..." >}} inlines the SVG so it can use the site's colors. */ -}}
+{{- $src := .Get "src" -}}
+{{- with .Page.Resources.Get $src -}}
+<figure class="svg{{ with $.Get "class" }} {{ . }}{{ end }}">
+  {{ .Content | safeHTML }}
+  {{- with $.Get "caption" }}
+  <figcaption>{{ . | markdownify }}</figcaption>
+  {{- end }}
+</figure>
+{{- else -}}
+  {{- warnf "SVG %q not found next to %s" $src .Page.File.Path -}}
+{{- end -}}

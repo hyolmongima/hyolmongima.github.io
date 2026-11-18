@@ -1,0 +1,66 @@
+baseURL = "https://hyolmongima.github.io/"
+locale = "en-US"
+title = "Ngima Hyolmo"
+disableKinds = ["taxonomy", "term", "sitemap"]
+enableRobotsTXT = true
+
+[params]
+  # Asks search engines not to list any page. Anyone with the link can still view the site.
+  # robots.txt must keep allowing crawlers, or they never see this.
+  unlisted = true
+  # One sentence used for search results and link previews.
+  description = ""
+  # Pinned to the bottom left of the home page.
+  email = "hyolmo.nima01@gmail.com"
+  # Diagram pages only. Swap for a self-hosted copy if you prefer.
+  mermaid = "https://cdn.jsdelivr.net/npm/mermaid@12.3.0/dist/mermaid.esm.min.mjs"
+  # Interactive 3D surface pages only (the {{< surface >}} shortcode).
+  plotly = "https://cdn.jsdelivr.net/npm/plotly.js-gl3d-dist-min@3/plotly-gl3d.min.js"
+
+  # Shown in this order on the home page. Empty urls are skipped.
+  [[params.links]]
+    name = "GitHub"
+    url = "https://github.com/hyolmongima"
+  [[params.links]]
+    name = "Scholar"
+    url = ""
+
+[menus]
+  [[menus.main]]
+    name = "Projects"
+    pageRef = "/projects"
+    weight = 10
+  [[menus.main]]
+    name = "Notes"
+    pageRef = "/notes"
+    weight = 20
+
+[markup]
+  [markup.goldmark.renderer]
+    unsafe = true
+  [markup.goldmark.parser]
+    wrapStandAloneImageWithinParagraph = false
+    [markup.goldmark.parser.attribute]
+      block = true
+  [markup.goldmark.extensions.passthrough]
+    enable = true
+    [markup.goldmark.extensions.passthrough.delimiters]
+      block = [['\[', '\]'], ['$$', '$$']]
+      inline = [['\(', '\)'], ['$', '$']]
+  [markup.highlight]
+    noClasses = false
+    guessSyntax = false
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel = 3
+
+[imaging]
+  resampleFilter = "CatmullRom"
+  [imaging.jpeg]
+    quality = 82
+  [imaging.webp]
+    quality = 82
+
+[outputs]
+  home = ["html", "rss"]
+  section = ["html"]

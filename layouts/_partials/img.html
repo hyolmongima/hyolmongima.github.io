@@ -1,0 +1,20 @@
+{{- /* Responsive WebP <img> for a raster resource; other formats pass through. */ -}}
+{{- $r := .res -}}
+{{- $alt := .alt | default "" -}}
+{{- $sizes := .sizes | default "(min-width: 42.5rem) 40rem, 100vw" -}}
+{{- $widths := .widths | default (slice 480 800 1200 1600) -}}
+{{- if in (slice "jpeg" "png" "webp" "tiff" "bmp") $r.MediaType.SubType -}}
+  {{- $hint := cond (eq $r.MediaType.SubType "png") "drawing" "photo" -}}
+  {{- $ws := slice -}}
+  {{- range $widths }}{{ if lt . $r.Width }}{{ $ws = $ws | append . }}{{ end }}{{ end -}}
+  {{- if le $r.Width (index $widths (sub (len $widths) 1)) }}{{ $ws = $ws | append $r.Width }}{{ end -}}
+  {{- $set := slice -}}
+  {{- $src := "" -}}
+  {{- range $ws -}}
+    {{- $src = $r.Resize (printf "%dx webp %s" . $hint) -}}
+    {{- $set = $set | append (printf "%s %dw" $src.RelPermalink .) -}}
+  {{- end -}}
+  <img src="{{ $src.RelPermalink }}" srcset="{{ delimit $set ", " }}" sizes="{{ $sizes }}" width="{{ $src.Width }}" height="{{ $src.Height }}" alt="{{ $alt }}" loading="lazy" decoding="async">
+{{- else -}}
+  <img src="{{ $r.RelPermalink }}" alt="{{ $alt }}" loading="lazy" decoding="async">
+{{- end -}}

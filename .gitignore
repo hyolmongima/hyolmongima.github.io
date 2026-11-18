@@ -1,0 +1,7 @@
+public/
+resources/
+.hugo_build.lock
+
+# Drafts stay local, out of the public repo.
+content/notes/bayesian-filters/
+content/projects/_example/

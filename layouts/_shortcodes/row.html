@@ -1,0 +1,4 @@
+{{- /* Side-by-side images: wrap standalone Markdown images in {{< row >}} ... {{< /row >}}. */ -}}
+<div class="row{{ with .Get "class" }} {{ . }}{{ end }}">
+{{ .Inner | .Page.RenderString (dict "display" "block") }}
+</div>

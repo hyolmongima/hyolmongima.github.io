@@ -1,0 +1,60 @@
+<svg class="kx" viewBox="0 0 900 265" role="img" aria-label="Two-way swap, three-way cycle and altruistic chain" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .kx { color: var(--muted); font-family: var(--sans); }
+    .kx-pill { fill: none; stroke: currentColor; stroke-width: 1; opacity: .55; }
+    .kx-ring { fill: var(--bg); stroke-width: 2; }
+    .kx-t { font-size: 10px; font-weight: 600; text-anchor: middle; dominant-baseline: central; }
+    .kx-dt { fill: #fff; }
+    .kx-e { fill: none; stroke-width: 1.6; }
+    .kx-title { font-size: 12.5px; fill: currentColor; text-anchor: middle; }
+    .kx-note { font-size: 10.5px; fill: currentColor; text-anchor: middle; }
+  </style>
+  <defs>
+    <marker id="kx-ma" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,1 L9,5 L0,9 z" fill="#e0605e"/></marker>
+    <marker id="kx-mb" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,1 L9,5 L0,9 z" fill="#4b8ee6"/></marker>
+    <marker id="kx-mo" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,1 L9,5 L0,9 z" fill="#3daa78"/></marker>
+    <marker id="kx-mab" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,1 L9,5 L0,9 z" fill="#9a6bd6"/></marker>
+  </defs>
+
+  <!-- Two-way swap -->
+  <rect class="kx-pill" x="45" y="93" width="60" height="34" rx="17"/>
+  <rect class="kx-pill" x="165" y="93" width="60" height="34" rx="17"/>
+  <circle class="kx-ring" cx="61" cy="110" r="11" stroke="#4b8ee6"/><text class="kx-t" x="61" y="110" fill="#4b8ee6">B</text>
+  <circle cx="89" cy="110" r="11" fill="#e0605e"/><text class="kx-t kx-dt" x="89" y="110">A</text>
+  <circle class="kx-ring" cx="181" cy="110" r="11" stroke="#e0605e"/><text class="kx-t" x="181" y="110" fill="#e0605e">A</text>
+  <circle cx="209" cy="110" r="11" fill="#4b8ee6"/><text class="kx-t kx-dt" x="209" y="110">B</text>
+  <path class="kx-e" stroke="#e0605e" marker-end="url(#kx-ma)" d="M94.5,100.5 C110,70 160,70 174,97.9"/>
+  <path class="kx-e" stroke="#4b8ee6" marker-end="url(#kx-mb)" d="M203.5,119.5 C185,175 85,175 68,122.1"/>
+  <text class="kx-title" x="135" y="250">Two-way swap</text>
+
+  <!-- Three-way cycle -->
+  <rect class="kx-pill" x="400" y="38" width="60" height="34" rx="17"/>
+  <rect class="kx-pill" x="470" y="148" width="60" height="34" rx="17"/>
+  <rect class="kx-pill" x="330" y="148" width="60" height="34" rx="17"/>
+  <circle class="kx-ring" cx="416" cy="55" r="11" stroke="#3daa78"/><text class="kx-t" x="416" y="55" fill="#3daa78">O</text>
+  <circle cx="444" cy="55" r="11" fill="#e0605e"/><text class="kx-t kx-dt" x="444" y="55">A</text>
+  <circle class="kx-ring" cx="486" cy="165" r="11" stroke="#e0605e"/><text class="kx-t" x="486" y="165" fill="#e0605e">A</text>
+  <circle cx="514" cy="165" r="11" fill="#4b8ee6"/><text class="kx-t kx-dt" x="514" y="165">B</text>
+  <circle cx="346" cy="165" r="11" fill="#3daa78"/><text class="kx-t kx-dt" x="346" y="165">O</text>
+  <circle class="kx-ring" cx="374" cy="165" r="11" stroke="#4b8ee6"/><text class="kx-t" x="374" y="165" fill="#4b8ee6">B</text>
+  <path class="kx-e" stroke="#e0605e" marker-end="url(#kx-ma)" d="M453.5,60.5 C480,70 495,115 488.4,151.2"/>
+  <path class="kx-e" stroke="#4b8ee6" marker-end="url(#kx-mb)" d="M512.1,175.8 C505,225 385,225 376.4,178.8"/>
+  <path class="kx-e" stroke="#3daa78" marker-end="url(#kx-mo)" d="M344.1,154.2 C335,110 365,55 402,55"/>
+  <text class="kx-title" x="430" y="250">Three-way cycle</text>
+
+  <!-- Altruistic chain -->
+  <circle cx="600" cy="110" r="11" fill="#e0605e"/><text class="kx-t kx-dt" x="600" y="110">A</text>
+  <text class="kx-note" x="600" y="142">altruist</text>
+  <rect class="kx-pill" x="644" y="93" width="60" height="34" rx="17"/>
+  <rect class="kx-pill" x="734" y="93" width="60" height="34" rx="17"/>
+  <circle class="kx-ring" cx="660" cy="110" r="11" stroke="#e0605e"/><text class="kx-t" x="660" y="110" fill="#e0605e">A</text>
+  <circle cx="688" cy="110" r="11" fill="#4b8ee6"/><text class="kx-t kx-dt" x="688" y="110">B</text>
+  <circle class="kx-ring" cx="750" cy="110" r="11" stroke="#4b8ee6"/><text class="kx-t" x="750" y="110" fill="#4b8ee6">B</text>
+  <circle cx="778" cy="110" r="11" fill="#9a6bd6"/><text class="kx-t kx-dt" x="778" y="110" style="font-size:8.5px">AB</text>
+  <circle class="kx-ring" cx="840" cy="110" r="11" stroke="#9a6bd6"/><text class="kx-t" x="840" y="110" fill="#9a6bd6" style="font-size:8.5px">AB</text>
+  <text class="kx-note" x="840" y="142">waitlist</text>
+  <path class="kx-e" stroke="#e0605e" marker-end="url(#kx-ma)" d="M605.5,100.5 C615,75 645,75 653,97.9"/>
+  <path class="kx-e" stroke="#4b8ee6" marker-end="url(#kx-mb)" d="M693.5,100.5 C703,75 735,75 743,97.9"/>
+  <path class="kx-e" stroke="#9a6bd6" marker-end="url(#kx-mab)" stroke-dasharray="4 3" d="M783.5,100.5 C793,75 825,75 833,97.9"/>
+  <text class="kx-title" x="720" y="250">Altruistic chain</text>
+</svg>

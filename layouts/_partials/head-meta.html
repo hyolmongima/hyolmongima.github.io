@@ -1,0 +1,22 @@
+{{- if site.Params.unlisted }}
+<meta name="robots" content="noindex">
+{{- end }}
+{{- $desc := site.Params.description -}}
+{{- if not .IsHome }}{{ with .Summary }}{{ $desc = . | plainify | htmlUnescape | truncate 160 }}{{ end }}{{ end -}}
+{{- with $desc }}
+<meta name="description" content="{{ . }}">
+<meta property="og:description" content="{{ . }}">
+{{- end }}
+<meta property="og:title" content="{{ .Title }}">
+<meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
+<meta property="og:url" content="{{ .Permalink }}">
+{{- with .Resources.GetMatch "cover.*" }}
+{{- if in (slice "jpeg" "png" "webp") .MediaType.SubType }}
+{{- $og := .Fill "1200x630 jpg q80 smart" }}
+<meta property="og:image" content="{{ $og.Permalink }}">
+<meta name="twitter:card" content="summary_large_image">
+{{- end }}
+{{- end }}
+{{- if .IsHome }}{{ with .OutputFormats.Get "rss" }}
+<link rel="alternate" type="application/rss+xml" href="{{ .RelPermalink }}" title="{{ site.Title }}">
+{{- end }}{{ end }}

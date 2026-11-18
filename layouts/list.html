@@ -1,0 +1,14 @@
+{{ define "main" }}
+<h1>{{ .Title }}</h1>
+{{ .Content }}
+{{- if eq .Section "projects" }}
+{{- range .Pages.GroupByDate "2006" }}
+<section class="year-group">
+  <h2 class="year">{{ .Key }}</h2>
+  {{ partial "project-list.html" .Pages }}
+</section>
+{{- end }}
+{{- else }}
+{{ partial "note-list.html" .Pages }}
+{{- end }}
+{{ end }}

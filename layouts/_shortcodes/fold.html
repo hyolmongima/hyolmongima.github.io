@@ -1,0 +1,8 @@
+{{- /* {{% fold title="Hardware" %}} ...markdown... {{% /fold %}} is a section that starts collapsed. class="small" gives a compact, paragraph-sized toggle. */ -}}
+{{- $title := .Get "title" -}}
+<details class="fold{{ with .Get "class" }} {{ . }}{{ end }}" id="{{ anchorize $title }}">
+<summary>{{ $title }}</summary>
+
+{{ .Inner }}
+
+</details>

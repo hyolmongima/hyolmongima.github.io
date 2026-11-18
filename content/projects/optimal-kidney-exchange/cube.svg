@@ -1,0 +1,43 @@
+<svg class="kc" viewBox="90 55 390 265" role="img" aria-label="Unit cube of the three decision variables; the feasible set is its main diagonal" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .kc { color: var(--muted); font-family: var(--sans); }
+    .kc-edge { fill: none; stroke: currentColor; stroke-width: 1; opacity: .55; }
+    .kc-hidden { stroke-dasharray: 3 3; opacity: .4; }
+    .kc-corner { fill: var(--bg); stroke: currentColor; stroke-width: 1; opacity: .7; }
+    .kc-diag { stroke: var(--accent); stroke-width: 2.5; stroke-linecap: round; }
+    .kc-end { fill: var(--accent); }
+    .kc-start { fill: var(--bg); stroke: var(--accent); stroke-width: 2; }
+    .kc-axis { font-size: 13px; font-style: italic; fill: currentColor; }
+    .kc-sub { font-size: 9px; font-style: normal; }
+    .kc-note { font-size: 11px; fill: currentColor; }
+    .kc-strong { fill: var(--fg); }
+  </style>
+
+  <!-- hidden edges from the back corner (0,0,0) -->
+  <path class="kc-edge kc-hidden" d="M210,240 L140,290 M210,240 L370,240 M210,240 L210,90"/>
+  <!-- visible edges -->
+  <path class="kc-edge" d="M140,290 L300,290 L370,240 L370,90 L210,90 L140,140 Z"/>
+  <path class="kc-edge" d="M140,140 L300,140 L370,90 M300,140 L300,290"/>
+
+  <!-- infeasible 0/1 corners -->
+  <circle class="kc-corner" cx="140" cy="290" r="3.5"/>
+  <circle class="kc-corner" cx="370" cy="240" r="3.5"/>
+  <circle class="kc-corner" cx="210" cy="90" r="3.5"/>
+  <circle class="kc-corner" cx="300" cy="290" r="3.5"/>
+  <circle class="kc-corner" cx="140" cy="140" r="3.5"/>
+  <circle class="kc-corner" cx="370" cy="90" r="3.5"/>
+
+  <!-- feasible set: the main diagonal -->
+  <line class="kc-diag" x1="210" y1="240" x2="300" y2="140"/>
+  <circle class="kc-start" cx="210" cy="240" r="5"/>
+  <circle class="kc-end" cx="300" cy="140" r="6"/>
+
+  <!-- axis labels at the unit corners -->
+  <text class="kc-axis" x="112" y="308">y<tspan class="kc-sub" dy="3">01</tspan></text>
+  <text class="kc-axis" x="380" y="244">y<tspan class="kc-sub" dy="3">12</tspan></text>
+  <text class="kc-axis" x="200" y="76">y<tspan class="kc-sub" dy="3">20</tspan></text>
+
+  <!-- endpoint labels -->
+  <text class="kc-note" x="222" y="258">0 transplants</text>
+  <text class="kc-note kc-strong" x="292" y="130" text-anchor="end">3 transplants</text>
+</svg>

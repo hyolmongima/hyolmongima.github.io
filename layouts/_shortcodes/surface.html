@@ -1,0 +1,13 @@
+{{- /* {{< surface src="sweep.json" caption="..." >}} draws an interactive 3D surface from {x, y, z, labels, log, marker} JSON. */ -}}
+{{- $src := .Get "src" -}}
+{{- with .Page.Resources.Get $src -}}
+{{- $.Page.Store.Set "hasSurface" true -}}
+<figure class="surface{{ with $.Get "class" }} {{ . }}{{ end }}">
+  <div class="plot" data-src="{{ .RelPermalink }}" role="img" aria-label="{{ $.Get "caption" | plainify }}"></div>
+  {{- with $.Get "caption" }}
+  <figcaption>{{ . | markdownify }}</figcaption>
+  {{- end }}
+</figure>
+{{- else -}}
+  {{- warnf "Surface data %q not found next to %s" $src .Page.File.Path -}}
+{{- end -}}

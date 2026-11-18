@@ -1,0 +1,10 @@
+{{- .Page.Store.Set "hasMermaid" true -}}
+{{- $diagram := printf `<pre class="mermaid">%s</pre>` (.Inner | htmlEscape) | safeHTML -}}
+{{- with .Attributes.caption -}}
+<figure{{ with $.Attributes.class }} class="{{ . }}"{{ end }}>
+  {{ $diagram }}
+  <figcaption>{{ . | markdownify }}</figcaption>
+</figure>
+{{- else -}}
+{{ $diagram }}
+{{- end -}}

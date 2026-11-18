@@ -1,0 +1,24 @@
+{{- $u := urls.Parse .Destination -}}
+{{- $res := "" -}}
+{{- if not $u.IsAbs -}}
+  {{- $res = or (.Page.Resources.Get $u.Path) (resources.Get $u.Path) -}}
+  {{- if and (not $res) (not (strings.HasPrefix $u.Path "/")) -}}
+    {{- warnf "Image %q not found next to %s" $u.Path .Page.File.Path -}}
+  {{- end -}}
+{{- end -}}
+{{- $img := "" -}}
+{{- if $res -}}
+  {{- $img = partial "img.html" (dict "res" $res "alt" .PlainText) -}}
+{{- else -}}
+  {{- $img = printf `<img src="%s" alt="%s" loading="lazy" decoding="async">` (.Destination | safeURL) (.PlainText | htmlEscape) | safeHTML -}}
+{{- end -}}
+{{- if .IsBlock -}}
+<figure{{ with .Attributes.class }} class="{{ . }}"{{ end }}>
+  {{- if $res }}<a href="{{ $res.RelPermalink }}">{{ $img }}</a>{{ else }}{{ $img }}{{ end }}
+  {{- with .Title }}
+  <figcaption>{{ . | markdownify }}</figcaption>
+  {{- end }}
+</figure>
+{{- else -}}
+{{ $img }}
+{{- end -}}

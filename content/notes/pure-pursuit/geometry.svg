@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 340" role="img" aria-label="Left: a circle of radius L around the robot meets the path ahead at the lookahead point. Right: in the robot frame, the arc through the robot and the lookahead point has its centre on the body y-axis.">
+  <style>
+    .pp-path { stroke: var(--fg); stroke-width: 2; fill: none; stroke-linejoin: round; }
+    .pp-window { stroke: var(--accent); stroke-width: 10; stroke-linecap: round; stroke-linejoin: round; fill: none; opacity: .15; }
+    .pp-vertex { fill: var(--fg); }
+    .pp-circle { stroke: var(--muted); stroke-width: 1.2; stroke-dasharray: 4 4; fill: none; }
+    .pp-ray { stroke: var(--muted); stroke-width: 1.2; stroke-dasharray: 4 4; fill: none; }
+    .pp-drop { stroke: var(--muted); stroke-width: 1; stroke-dasharray: 2 3; fill: none; }
+    .pp-axis { stroke: var(--muted); stroke-width: 1.2; fill: none; marker-end: url(#pp-head); }
+    .pp-arc { stroke: var(--accent); stroke-width: 2.5; fill: none; stroke-linecap: round; }
+    .pp-robot { fill: var(--fg); }
+    .pp-hit { stroke: var(--accent); stroke-width: 2.5; stroke-linecap: round; }
+    .pp-miss { fill: var(--bg); stroke: var(--muted); stroke-width: 1.5; }
+    .pp-centre { fill: var(--accent); }
+    .pp-rule { stroke: var(--rule); stroke-width: 1; }
+    .pp-title { font: 500 14px var(--sans); fill: var(--fg); text-anchor: middle; }
+    .pp-note { font: 12px var(--sans); fill: var(--muted); }
+    .pp-sym { font: italic 14px var(--sans); fill: var(--fg); }
+    .pp-eq { font: italic 16px var(--sans); fill: var(--fg); text-anchor: middle; }
+  </style>
+  <defs>
+    <marker id="pp-head" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M1 1 L9 5 L1 9" fill="none" stroke="var(--muted)" stroke-width="1.6"/>
+    </marker>
+  </defs>
+
+  <text class="pp-title" x="225" y="26">World frame: pick the lookahead</text>
+  <text class="pp-title" x="675" y="26">Body frame: fit the arc</text>
+  <line class="pp-rule" x1="450" y1="50" x2="450" y2="320"/>
+
+  <!-- World frame -->
+  <polyline class="pp-window" points="120,210 210,155 300,110"/>
+  <polyline class="pp-path" points="30,240 120,210 210,155 300,110 420,90"/>
+  <circle class="pp-vertex" cx="30" cy="240" r="3"/>
+  <circle class="pp-vertex" cx="120" cy="210" r="3"/>
+  <circle class="pp-vertex" cx="210" cy="155" r="3"/>
+  <circle class="pp-vertex" cx="300" cy="110" r="3"/>
+  <circle class="pp-vertex" cx="420" cy="90" r="3"/>
+  <text class="pp-note" x="318" y="134">search window</text>
+
+  <circle class="pp-circle" cx="150" cy="240" r="90"/>
+  <line class="pp-ray" x1="150" y1="240" x2="196.8" y2="163.1"/>
+  <text class="pp-sym" x="158" y="198">L</text>
+  <circle class="pp-miss" cx="60.6" cy="229.8" r="4"/>
+  <text class="pp-note" x="44" y="262">behind</text>
+  <path class="pp-hit" d="M190.8 157.1 l12 12 M202.8 157.1 l-12 12"/>
+  <text class="pp-sym" x="210" y="172">p<tspan font-size="10" dy="3">L</tspan></text>
+  <polygon class="pp-robot" points="161.5,232 148,251.1 138.9,238"/>
+
+  <!-- Body frame -->
+  <line class="pp-axis" x1="560" y1="290" x2="560" y2="140"/>
+  <text class="pp-sym" x="567" y="148">x</text>
+  <line class="pp-axis" x1="560" y1="290" x2="390" y2="290"/>
+  <text class="pp-sym" x="384" y="295" text-anchor="end">y</text>
+
+  <line class="pp-drop" x1="482.9" y1="198.1" x2="560" y2="198.1"/>
+  <line class="pp-drop" x1="482.9" y1="198.1" x2="482.9" y2="290"/>
+  <text class="pp-sym" x="567" y="248">x<tspan font-size="10" dy="3">L</tspan></text>
+  <text class="pp-sym" x="514" y="309">y<tspan font-size="10" dy="3">L</tspan></text>
+
+  <line class="pp-ray" x1="466.6" y1="290" x2="482.9" y2="198.1"/>
+  <text class="pp-sym" x="462" y="242" text-anchor="end">R</text>
+  <line class="pp-ray" x1="560" y1="290" x2="482.9" y2="198.1"/>
+  <text class="pp-sym" x="528" y="236">L</text>
+  <path class="pp-drop" d="M560 262 A28 28 0 0 0 542 268.6"/>
+  <text class="pp-sym" x="541" y="256">&#945;</text>
+
+  <path class="pp-arc" d="M560 290 A93.4 93.4 0 0 0 482.9 198.1"/>
+  <path class="pp-hit" d="M476.9 192.1 l12 12 M488.9 192.1 l-12 12"/>
+  <circle class="pp-centre" cx="466.6" cy="290" r="4"/>
+  <text class="pp-note" x="466.6" y="312" text-anchor="middle">C = (0, R)</text>
+  <polygon class="pp-robot" points="560,276 551,298 569,298"/>
+
+  <text class="pp-eq" x="760" y="190">&#954; = 1/R = 2y<tspan font-size="11" dy="3">L</tspan><tspan dy="-3"> / L</tspan><tspan font-size="11" dy="-6">2</tspan></text>
+  <text class="pp-eq" x="760" y="226">&#969; = v&#954;</text>
+</svg>

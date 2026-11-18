@@ -1,0 +1,30 @@
+<ul class="projects">
+{{- range . }}
+  {{- $cover := .Resources.GetMatch "cover.*" }}
+  <li>
+    <a href="{{ .RelPermalink }}"{{ if not $cover }} class="no-thumb"{{ end }}>
+      {{- with $cover }}
+      {{- if in (slice "jpeg" "png" "webp") .MediaType.SubType }}
+      {{- $s := .Fill "240x160 webp smart" }}
+      {{- $l := .Fill "480x320 webp smart" }}
+      <img src="{{ $l.RelPermalink }}" srcset="{{ $s.RelPermalink }} 240w, {{ $l.RelPermalink }} 480w" sizes="9rem" width="240" height="160" alt="" loading="lazy" decoding="async">
+      {{- else }}
+      <img src="{{ .RelPermalink }}" alt="" loading="lazy" decoding="async">
+      {{- end }}
+      {{- end }}
+      <span>
+        <span class="title">{{ .Title }}</span>
+        {{- with .Params.summary }}
+        <span class="summary">{{ . }}</span>
+        {{- end }}
+        {{- $meta := slice }}
+        {{- range .Params.tags }}{{ $meta = $meta | append . }}{{ end }}
+        {{- if .Draft }}{{ $meta = $meta | append "draft" }}{{ end }}
+        {{- with $meta }}
+        <span class="meta">{{ delimit . " · " }}</span>
+        {{- end }}
+      </span>
+    </a>
+  </li>
+{{- end }}
+</ul>

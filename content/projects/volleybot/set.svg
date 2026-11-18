@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 300" role="img" aria-label="Two two-link arms catch a falling ball on a soft virtual spring, then push it back up on a stiff one.">
+  <style>
+    .vb-ground { stroke: var(--rule); stroke-width: 2; }
+    .vb-set { stroke: var(--muted); stroke-width: 1; stroke-dasharray: 3 4; fill: none; }
+    .vb-link { stroke: var(--fg); stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; fill: none; }
+    .vb-joint { fill: var(--bg); stroke: var(--fg); stroke-width: 2; }
+    .vb-hand { fill: var(--accent); }
+    .vb-ball { fill: #e8b04a; stroke: #b9822a; stroke-width: 1.5; }
+    .vb-seam { stroke: #b9822a; stroke-width: 1.2; fill: none; }
+    .vb-spring { stroke: var(--accent); fill: none; stroke-linejoin: round; stroke-linecap: round; }
+    .vb-move { stroke: var(--muted); stroke-width: 1.5; fill: none; marker-end: url(#vb-head); }
+    .vb-step { stroke: var(--rule); stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    .vb-label { font: 500 14px var(--sans); fill: var(--fg); text-anchor: middle; }
+    .vb-note { font: 12px var(--sans); fill: var(--muted); }
+  </style>
+  <defs>
+    <marker id="vb-head" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M1 1 L9 5 L1 9" fill="none" stroke="var(--muted)" stroke-width="1.6"/>
+    </marker>
+    <g id="vb-ball">
+      <circle class="vb-ball" r="20"/>
+      <path class="vb-seam" d="M-19 -5 Q0 4 19 -5 M-6 -19 Q4 0 -6 19"/>
+    </g>
+  </defs>
+
+  <line class="vb-ground" x1="20" y1="252" x2="280" y2="252"/>
+  <line class="vb-ground" x1="320" y1="252" x2="580" y2="252"/>
+  <line class="vb-ground" x1="620" y1="252" x2="880" y2="252"/>
+
+  <line class="vb-set" x1="10" y1="130" x2="290" y2="130"/>
+  <line class="vb-set" x1="310" y1="130" x2="590" y2="130"/>
+  <line class="vb-set" x1="610" y1="130" x2="890" y2="130"/>
+  <text class="vb-note" x="290" y="123" text-anchor="end">setpoint</text>
+
+  <path class="vb-step" d="M296 142 l8 8 -8 8"/>
+  <path class="vb-step" d="M596 142 l8 8 -8 8"/>
+
+  <!-- Fall: hands at the setpoint -->
+  <polyline class="vb-link" points="100,250 47.3,173.3 145.2,130"/>
+  <polyline class="vb-link" points="200,250 252.7,173.3 154.8,130"/>
+  <circle class="vb-joint" cx="100" cy="250" r="5"/>
+  <circle class="vb-joint" cx="200" cy="250" r="5"/>
+  <circle class="vb-joint" cx="47.3" cy="173.3" r="4"/>
+  <circle class="vb-joint" cx="252.7" cy="173.3" r="4"/>
+  <circle class="vb-hand" cx="145.2" cy="130" r="5"/>
+  <circle class="vb-hand" cx="154.8" cy="130" r="5"/>
+  <use href="#vb-ball" x="150" y="50"/>
+  <line class="vb-move" x1="190" y1="38" x2="190" y2="92"/>
+
+  <!-- Catch: soft spring, hands pushed below the setpoint -->
+  <polyline class="vb-link" points="400,250 338.5,180.3 445,170"/>
+  <polyline class="vb-link" points="500,250 561.5,180.3 455,170"/>
+  <circle class="vb-joint" cx="400" cy="250" r="5"/>
+  <circle class="vb-joint" cx="500" cy="250" r="5"/>
+  <circle class="vb-joint" cx="338.5" cy="180.3" r="4"/>
+  <circle class="vb-joint" cx="561.5" cy="180.3" r="4"/>
+  <circle class="vb-hand" cx="445" cy="170" r="5"/>
+  <circle class="vb-hand" cx="455" cy="170" r="5"/>
+  <use href="#vb-ball" x="450" y="145"/>
+  <path class="vb-spring" stroke-width="1.4" d="M309 130 h12 M315 130 V135 L321 138.75 L309 146.25 L321 153.75 L309 161.25 L315 165 V170 M309 170 h12"/>
+
+  <!-- Push: stiff spring, hands driven above the setpoint -->
+  <polyline class="vb-link" points="700,250 660.6,165.8 745,100"/>
+  <polyline class="vb-link" points="800,250 839.4,165.8 755,100"/>
+  <circle class="vb-joint" cx="700" cy="250" r="5"/>
+  <circle class="vb-joint" cx="800" cy="250" r="5"/>
+  <circle class="vb-joint" cx="660.6" cy="165.8" r="4"/>
+  <circle class="vb-joint" cx="839.4" cy="165.8" r="4"/>
+  <circle class="vb-hand" cx="745" cy="100" r="5"/>
+  <circle class="vb-hand" cx="755" cy="100" r="5"/>
+  <use href="#vb-ball" x="750" y="48"/>
+  <line class="vb-move" x1="790" y1="88" x2="790" y2="30"/>
+  <path class="vb-spring" stroke-width="1.8" d="M609 100 h12 M615 100 V105 L621 106.25 L609 108.75 L621 111.25 L609 113.75 L621 116.25 L609 118.75 L621 121.25 L609 123.75 L615 125 V130 M609 130 h12"/>
+
+  <text class="vb-label" x="150" y="284">Fall</text>
+  <text class="vb-label" x="450" y="284">Catch on a soft spring</text>
+  <text class="vb-label" x="750" y="284">Push on a stiff spring</text>
+</svg>

@@ -1,0 +1,13 @@
+{{ define "main" }}
+<section class="intro">
+  <h1>{{ .Title }}</h1>
+  {{ .Content }}
+  {{- with where site.Params.links "url" "!=" "" }}
+  <p class="links">
+    {{- range . }}
+    <a href="{{ .url }}">{{ .name }}</a>
+    {{- end }}
+  </p>
+  {{- end }}
+</section>
+{{ end }}
